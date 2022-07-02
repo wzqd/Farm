@@ -41,6 +41,36 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: groundBot
+    uniqueID: 3576709517
+    locked: 0
+  - name: groundMid
+    uniqueID: 1325507965
+    locked: 0
+  - name: groundTop
+    uniqueID: 37741415
+    locked: 0
+  - name: pit
+    uniqueID: 2479324233
+    locked: 0
+  - name: water
+    uniqueID: 3474204083
+    locked: 0
+  - name: decBot
+    uniqueID: 29818977
+    locked: 0
+  - name: decTop
+    uniqueID: 1605517419
+    locked: 0
+  - name: objects
     uniqueID: 3463145239
+    locked: 0
+  - name: frontBot
+    uniqueID: 2654065617
+    locked: 0
+  - name: frontTop
+    uniqueID: 761265575
+    locked: 0
+  - name: colliders
+    uniqueID: 1152516915
     locked: 0
