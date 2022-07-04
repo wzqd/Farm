@@ -111,9 +111,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5809743844033459657}
   - component: {fileID: 7613396401508047173}
-  - component: {fileID: 1695238459604055188}
+  - component: {fileID: 7003872586768693924}
   m_Layer: 0
-  m_Name: GreenTree
+  m_Name: PinkTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +171,7 @@ PolygonCollider2D:
       - {x: 1.3913673, y: -2.4344773}
       - {x: 4.818822, y: -1.8227239}
       - {x: 4.7103724, y: 0.99950314}
---- !u!114 &1695238459604055188
+--- !u!114 &7003872586768693924
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,7 +257,7 @@ SpriteRenderer:
   m_SortingLayerID: -831822057
   m_SortingLayer: 8
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ec7ead9e8179941ed8942f22c6757b85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b1cc1582b1a56474ebc08fe278a37880, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -278,7 +278,7 @@ Animator:
   m_GameObject: {fileID: 5809743844635816343}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6e48a402b78800545ba9edf54e5aef96, type: 2}
+  m_Controller: {fileID: 9100000, guid: af31d301986251545a64766fe7448b68, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

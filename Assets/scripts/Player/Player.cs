@@ -78,4 +78,16 @@ public class Player : MonoBehaviour
     }
     
     
+    
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        EventMgr.Instance.EventTrigger("TriggerFadeIn",other); //触发事件，让遮住的物体变淡
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        EventMgr.Instance.EventTrigger("TriggerFadeOut",other); //触发事件，让变淡的物体还原
+    }
+
 }
