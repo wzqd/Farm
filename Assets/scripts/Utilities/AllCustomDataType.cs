@@ -9,8 +9,7 @@ using UnityEngine;
 public class ItemDetails
 {
     public int itemID; //物品id
-    public string name;//物品名
-
+    public string itemName;//物品名
     public ItemType itemType; //具体类型
     
     public Sprite itemIcon;//物品图标

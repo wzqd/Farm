@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemDetailsList:
   - itemID: 1001
-    name: Axe
+    itemName: Axe
     itemType: 4
     itemIcon: {fileID: 21300000, guid: 3714c3e6b5e3d498ebcd06d432b3dd89, type: 3}
     itemSpriteInWorld: {fileID: 0}
