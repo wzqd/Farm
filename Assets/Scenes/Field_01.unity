@@ -45070,7 +45070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5809743844033459658, guid: 854c8b8c2527c8d4899f768b55bc64f2, type: 3}
       propertyPath: m_Name
-      value: PinkTree
+      value: PinkTree_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 854c8b8c2527c8d4899f768b55bc64f2, type: 3}
@@ -45638,7 +45638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5809743844033459658, guid: 2db9dd190aa2869419555016efbcf4a2, type: 3}
       propertyPath: m_Name
-      value: YellowTree
+      value: YellowTree_01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2db9dd190aa2869419555016efbcf4a2, type: 3}
