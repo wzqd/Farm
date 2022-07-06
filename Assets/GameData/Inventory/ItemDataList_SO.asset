@@ -12,4 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40cae333e9f21fc40a2ad8922f566292, type: 3}
   m_Name: ItemDataList_SO
   m_EditorClassIdentifier: 
-  itemDetailsList: []
+  itemDetailsList:
+  - itemID: 1001
+    name: Axe
+    itemType: 4
+    itemIcon: {fileID: 21300000, guid: 3714c3e6b5e3d498ebcd06d432b3dd89, type: 3}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: An axe to cut down trees
+    itemUseRadius: 1
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0

@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Container" style="flex-grow: 1; flex-shrink: 1; flex-direction: row;">
+        <ui:VisualElement name="ItemList" style="width: 30%; height: 100%;">
+            <ui:VisualElement name="Header" style="flex-direction: row; justify-content: space-between;">
+                <ui:Label text="ItemList" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#Arial&apos;); font-size: 20px;" />
+                <ui:Button text="+" display-tooltip-when-elided="true" name="AddButton" style="-unity-font-style: bold;" />
+            </ui:VisualElement>
+            <ui:ListView focusable="true" name="ListView" reorderable="true" show-border="true" style="flex-grow: 1;" />
+        </ui:VisualElement>
+        <ui:ScrollView name="ItemDetails" style="flex-grow: 1; width: 70%; height: 100%;">
+            <ui:VisualElement name="Header" style="flex-direction: row; justify-content: space-between;">
+                <ui:Label text="Item Details" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#Arial&apos;); font-size: 20px;" />
+                <ui:Button text="Delete" display-tooltip-when-elided="true" name="AddButton" enable-rich-text="true" style="-unity-font-style: bold;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Content" style="flex-grow: 1;">
+                <ui:VisualElement name="Row1" style="height: 220px; width: auto; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+                    <ui:Label text="Gemeral" display-tooltip-when-elided="true" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; height: auto; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: auto; padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background-color: rgb(72, 69, 69);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Container" style="margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; flex-direction: row; height: 178px; width: 479px;">
+                    <ui:VisualElement name="Icon" style="width: 80px; height: 80px; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; background-image: url(&apos;project://database/Assets/Art/UI/ui_uncheck.png?fileID=2800000&amp;guid=d8f5d270aa27d4727abc19ee8d371c67&amp;type=3#ui_uncheck&apos;);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
