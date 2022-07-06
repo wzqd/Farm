@@ -10,7 +10,7 @@
         <ui:ScrollView name="ItemDetails" style="flex-grow: 1; width: 70%; height: 100%;">
             <ui:VisualElement name="Header" style="flex-direction: row; justify-content: space-between;">
                 <ui:Label text="Item Details" display-tooltip-when-elided="true" style="-unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#Arial&apos;); font-size: 20px;" />
-                <ui:Button text="Delete" display-tooltip-when-elided="true" name="AddButton" enable-rich-text="true" style="-unity-font-style: bold;" />
+                <ui:Button text="Delete" display-tooltip-when-elided="true" name="DeleteButton" enable-rich-text="true" style="-unity-font-style: bold;" />
             </ui:VisualElement>
             <ui:VisualElement name="Content" style="flex-grow: 1;">
                 <ui:VisualElement name="Row1" style="height: 163px; width: auto; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
@@ -36,14 +36,14 @@
                     <ui:VisualElement name="Left" style="width: 50%; align-items: stretch; justify-content: flex-start; height: auto; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
                         <ui:Label text="Description" display-tooltip-when-elided="true" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; height: 22px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: auto; padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background-color: rgb(72, 69, 69); -unity-font-style: bold; flex-grow: 0; margin-left: 2px; margin-right: 2px; margin-top: 2px; margin-bottom: 2px;" />
                         <uie:IntegerField label="Item Use Radius" value="0" name="ItemUseRadius" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold;" />
-                        <ui:Toggle label="Can Be Picked Up" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold;" />
-                        <ui:Toggle label="Can Be Lifted" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold;" />
-                        <ui:Toggle label="Can Be Picked Up" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold;" />
+                        <ui:Toggle label="Can Be Picked Up" name="CanBePickedUp" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold;" />
+                        <ui:Toggle label="Can Be Dropped" name="CanBeDropped" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold;" />
+                        <ui:Toggle label="Can Be Lifted" name="CanBeLifted" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; -unity-font-style: bold;" />
                     </ui:VisualElement>
                     <ui:VisualElement name="Right" style="width: 50%; height: auto; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
                         <ui:Label text="Description" display-tooltip-when-elided="true" style="border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; height: 22px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: auto; padding-left: 10px; padding-top: 3px; padding-bottom: 3px; background-color: rgb(72, 69, 69); -unity-font-style: bold; flex-grow: 0; margin-left: 2px; margin-right: 2px; margin-top: 2px; margin-bottom: 2px;" />
-                        <uie:IntegerField label="Price" value="0" style="-unity-font-style: bold; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
-                        <ui:Slider picking-mode="Ignore" label="Slider" value="0" high-value="1" show-input-field="true" style="-unity-font-style: bold; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
+                        <uie:IntegerField label="Price" value="0" name="Price" style="-unity-font-style: bold; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
+                        <ui:Slider picking-mode="Ignore" label="Item Sell Percentage" value="0" high-value="1" show-input-field="true" name="ItemSellPercentage" style="-unity-font-style: bold; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>

@@ -14,12 +14,288 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemDetailsList:
   - itemID: 1001
-    itemName: Axe
-    itemType: 4
-    itemIcon: {fileID: 21300000, guid: 3714c3e6b5e3d498ebcd06d432b3dd89, type: 3}
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
     itemSpriteInWorld: {fileID: 0}
-    itemDescription: An axe to cut down trees
-    itemUseRadius: 1
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1002
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1002
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1003
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1004
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1005
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1006
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1007
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1008
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1009
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1010
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1011
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1012
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1013
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1014
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1015
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1016
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1017
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1018
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1019
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1020
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1021
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1022
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  - itemID: 1023
+    itemName: NEW ITEM
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
     canBePickedUp: 0
     canBeDropped: 0
     canBeLifted: 0
