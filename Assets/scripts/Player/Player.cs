@@ -82,7 +82,6 @@ public class Player : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print(other.gameObject.name);
         EventMgr.Instance.EventTrigger("TriggerFadeIn",other.gameObject.name); //触发事件，让遮住的物体变淡
     }
 

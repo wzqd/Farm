@@ -14,7 +14,11 @@ public interface IFader
     
 }
 
+#region 淡化管理器
+//管理所有可淡化的物体
 
+//主要有登记淡化物体，和监听对外的淡出淡入事件
+#endregion
 public class FaderMgr : SingletonMono<FaderMgr>
 {
     /// <summary>

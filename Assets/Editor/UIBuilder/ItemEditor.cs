@@ -91,7 +91,7 @@ public class ItemEditor : EditorWindow
         itemList = dataBase.itemDetailsList;
         //如果不标记则无法保存数据
         EditorUtility.SetDirty(dataBase);
-        // Debug.Log(itemList[0].itemID);
+        Debug.Log(itemList[0].itemID);
     }
 
     private void GenerateListView()
