@@ -1,6 +1,6 @@
 public enum ItemType
 {
     Seed, Commodity, Furniture,
-    Hoe,Axe,Pixel,Sickle,WaterCan,
+    Hoe,Axe,Pickaxe,Sickle,WaterCan,
     HarvestableCrop,
 }

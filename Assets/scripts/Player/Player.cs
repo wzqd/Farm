@@ -83,6 +83,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         EventMgr.Instance.EventTrigger("TriggerFadeIn",other.gameObject.name); //触发事件，让遮住的物体变淡
+        EventMgr.Instance.EventTrigger("PickUpItems",other.gameObject); //触发事件，捡起道具
     }
 
     private void OnTriggerExit2D(Collider2D other)

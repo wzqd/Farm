@@ -15,7 +15,7 @@ MonoBehaviour:
   itemDetailsList:
   - itemID: 1000
     itemName: pickaxe
-    itemType: 1
+    itemType: 5
     itemIcon: {fileID: 21300000, guid: ab9788b07a759404293670018c76ec0f, type: 3}
     itemSpriteInWorld: {fileID: 21300000, guid: ab9788b07a759404293670018c76ec0f, type: 3}
     itemDescription: 
@@ -26,14 +26,14 @@ MonoBehaviour:
     itemPrice: 0
     itemSellPercentage: 0
   - itemID: 1001
-    itemName: NEW ITEM
+    itemName: PotatoSeed
     itemType: 0
-    itemIcon: {fileID: 0}
-    itemSpriteInWorld: {fileID: 0}
+    itemIcon: {fileID: 21300000, guid: f140b8cf7b2cb44c5bf34bb9bb3292f4, type: 3}
+    itemSpriteInWorld: {fileID: 21300000, guid: f140b8cf7b2cb44c5bf34bb9bb3292f4, type: 3}
     itemDescription: 
-    itemUseRadius: 0
-    canBePickedUp: 0
-    canBeDropped: 0
-    canBeLifted: 0
+    itemUseRadius: 1
+    canBePickedUp: 1
+    canBeDropped: 1
+    canBeLifted: 1
     itemPrice: 0
     itemSellPercentage: 0

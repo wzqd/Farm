@@ -19,7 +19,7 @@ public interface IFader
 
 //主要有登记淡化物体，和监听对外的淡出淡入事件
 #endregion
-public class FaderMgr : SingletonMono<FaderMgr>
+public class FaderMgr : Singleton<FaderMgr>
 {
     /// <summary>
     /// 所有可淡化物体的字典
@@ -28,7 +28,7 @@ public class FaderMgr : SingletonMono<FaderMgr>
     /// </summary>
     private Dictionary<string, IFader> faderDict = new Dictionary<string, IFader>();
 
-    private void Awake()
+    public  FaderMgr()
     {
         //添加对于物体淡化的监听
         EventMgr.Instance.AddEventListener<string>("TriggerFadeIn", TriggerFadeIn); 

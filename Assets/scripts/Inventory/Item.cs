@@ -8,15 +8,17 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public int itemID; //物品id
+    public ItemDetails itemDetails; //物品信息
 
     private SpriteRenderer spriteRenderer; //物品图片
     private BoxCollider2D itemCollider; //物品碰撞器
-    private ItemDetails itemDetails; //物品信息
 
     private void Awake() //开始得信息
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         itemCollider = GetComponent<BoxCollider2D>();
+        
+        
     }
 
     private void Start()

@@ -9,17 +9,19 @@ using UnityEngine;
 
 //主要有根据id得到物品的方法
 #endregion
-public class InventoryMgr : SingletonMono<InventoryMgr>
+public class InventoryMgr : Singleton<InventoryMgr>
 {
     /// <summary>
     /// 物品列表
     /// </summary>
     private ItemDataList_SO itemDataList_SO;
 
-    private void Awake()
+    public InventoryMgr()
     {
         string path = "Assets/GameData/Inventory/ItemDataList_SO.asset";
         itemDataList_SO = AssetDatabase.LoadAssetAtPath(path, typeof(ItemDataList_SO)) as ItemDataList_SO;
+        
+        EventMgr.Instance.AddEventListener<GameObject>("PickUpItems", addItemToBag);
     }
 
     /// <summary>
@@ -31,6 +33,18 @@ public class InventoryMgr : SingletonMono<InventoryMgr>
     {
         return itemDataList_SO.itemDetailsList.Find(i => i.itemID == ID);
     }
-    
+
+    /// <summary>
+    /// 拾取物品加入物品栏
+    /// </summary>
+    /// <param name="itemObj"></param>
+    private void addItemToBag(GameObject itemObj)
+    {
+        Item item = itemObj.GetComponent<Item>();
+        if (item != null && item.itemDetails.canBePickedUp)
+        {
+            PoolMgr.Instance.PushObj(item.name, itemObj); //利用缓存池管理散落在地上的物品
+        }
+    }
     
 }
