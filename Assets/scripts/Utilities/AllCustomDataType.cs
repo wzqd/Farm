@@ -39,6 +39,6 @@ public class ItemDetails
 [System.Serializable]
 public struct InventoryItem
 {
-    public int itemID; //物品id
+    public int itemID; //物品id, 0代表没有物品
     public int amount; //物品栏中物品数量
 }
