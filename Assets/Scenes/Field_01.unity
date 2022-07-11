@@ -77102,6 +77102,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBase
       objectReference: {fileID: 0}
+    - target: {fileID: 8708242741844269885, guid: ff56200da20e13d458c1ffbfe57d3a1d, type: 3}
+      propertyPath: itemID
+      value: 1001
+      objectReference: {fileID: 0}
     - target: {fileID: 8708242741844269887, guid: ff56200da20e13d458c1ffbfe57d3a1d, type: 3}
       propertyPath: m_RootOrder
       value: 7

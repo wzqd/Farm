@@ -43,8 +43,9 @@ public class InventoryMgr : Singleton<InventoryMgr>
     private void addItemToInventory(GameObject itemObj)
     {
         Item item = itemObj.GetComponent<Item>();
-
-        int index = GetIndexByItemID(item.itemID);
+        if(item is null) return;
+        
+        int index = GetIndexByItemID(item.itemID); //得到已有物品位置或者第一个空位
         AddItemToInventoryAtIndex(item.itemID,index,1);
         
         if (item != null && item.itemDetails.canBePickedUp)
@@ -94,18 +95,19 @@ public class InventoryMgr : Singleton<InventoryMgr>
             InventoryItem newItem = new InventoryItem {itemID = itemID, amount = amount};
             for (int i = 0; i < playerInventoryTab_SO.inventoryItemList.Count; i++)
             {
-                if (playerInventoryTab_SO.inventoryItemList[i].itemID == 0)
+                if (playerInventoryTab_SO.inventoryItemList[i].itemID == 0) //找到第一个空位
                 {
                     playerInventoryTab_SO.inventoryItemList[i] = newItem; //直接更新物品栏信息
                     break;
                 }
             }
         }
-        else //背包有这个物品
+        else if(index != -1)  //背包有这个物品
         {
             int currentAmount = playerInventoryTab_SO.inventoryItemList[index].amount + amount; //增加数量
             InventoryItem item = new InventoryItem {itemID = itemID, amount = currentAmount};
             playerInventoryTab_SO.inventoryItemList[index] = item; //更新物品栏信息
         }
+        //没有这个物品而且背包满了则不添加
     }
 }

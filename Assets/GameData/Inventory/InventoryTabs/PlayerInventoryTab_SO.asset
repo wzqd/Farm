@@ -12,4 +12,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c394f653b0800e9449365ff4226fff72, type: 3}
   m_Name: PlayerInventoryTab_SO
   m_EditorClassIdentifier: 
-  inventoryItemList: []
+  inventoryItemList:
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
+  - itemID: 0
+    amount: 0
