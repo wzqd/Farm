@@ -11,17 +11,19 @@ using UnityEngine;
 #endregion
 public class InventoryMgr : Singleton<InventoryMgr>
 {
-    /// <summary>
-    /// 物品列表
-    /// </summary>
-    private ItemDataList_SO itemDataList_SO;
+    private ItemDataList_SO itemDataList_SO; // 所有物品列表
+    private InventoryTab_SO playerInventoryTab_SO; //玩家物品栏列表
+    
 
     public InventoryMgr()
     {
         string path = "Assets/GameData/Inventory/ItemDataList_SO.asset";
-        itemDataList_SO = AssetDatabase.LoadAssetAtPath(path, typeof(ItemDataList_SO)) as ItemDataList_SO;
+        itemDataList_SO = AssetDatabase.LoadAssetAtPath(path, typeof(ItemDataList_SO)) as ItemDataList_SO; //得到文件
+
+        path = "Assets/GameData/Inventory/InventoryTabs/PlayerInventoryTab_SO.asset";
+        playerInventoryTab_SO = AssetDatabase.LoadAssetAtPath(path, typeof(InventoryTab_SO)) as InventoryTab_SO; //得到文件
         
-        EventMgr.Instance.AddEventListener<GameObject>("PickUpItems", addItemToBag);
+        EventMgr.Instance.AddEventListener<GameObject>("PickUpItems", addItemToBag); //监听捡起物品事件
     }
 
     /// <summary>

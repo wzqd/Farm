@@ -31,3 +31,14 @@ public class ItemDetails
 
 
 }
+
+/// <summary>
+/// 物品栏物品结构体
+/// 用结构体有初始值
+/// </summary>
+[System.Serializable]
+public struct InventoryItem
+{
+    public int itemID; //物品id
+    public int amount; //物品栏中物品数量
+}
