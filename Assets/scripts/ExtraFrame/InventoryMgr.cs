@@ -109,5 +109,6 @@ public class InventoryMgr : Singleton<InventoryMgr>
             playerInventoryTab_SO.inventoryItemList[index] = item; //更新物品栏信息
         }
         //没有这个物品而且背包满了则不添加
+        
     }
 }
