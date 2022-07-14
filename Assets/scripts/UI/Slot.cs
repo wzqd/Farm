@@ -14,6 +14,7 @@ public class Slot : MonoBehaviour
     [Header("格子类型")]
     public SlotType slotType; //格子枚举类型
     public bool isSelected; //是否被选中
+    public int slotIndex; //格子序号
 
     [Header("物品信息")]
     public ItemDetails itemDetails;
@@ -25,35 +26,34 @@ public class Slot : MonoBehaviour
         isSelected = false;
         if (itemDetails.itemID == 0)
         {
-            UpdateEmptySlot();
+            UpdateEmptySlot(); //开始时如果没有东西，变为空格子
         }
     }
 
     /// <summary>
-    /// 更新格子UI和信息
+    /// 更新格子UI中的信息
     /// </summary>
-    /// <param name="item">ItemDetails</param>
-    /// <param name="amount">持有数量</param>
+    /// <param name="item">ItemDetails类信息</param>
+    /// <param name="amount">持有的数量</param>
     public void UpdateSlot(ItemDetails item, int amount)
     {
         itemDetails = item;
         itemImage.sprite = item.itemIcon;
         itemAmount = amount;
+        itemImage.enabled = true; //显示图片
         amountText.text = amount.ToString();
-        if (itemAmount == 0) //如果没有则不显示数字
-            amountText.enabled = false;
+        amountText.enabled = itemAmount > 1; //如果没有或者只有一个则不显示数字
         button.interactable = true;
     }
 
     /// <summary>
-    /// 将Slot更新为空
+    /// 将Slot变为空
     /// </summary>
     public void UpdateEmptySlot()
     {
-        if (isSelected)
+        if (isSelected) //若已经选中，取消选中
             isSelected = false;
-        if (itemAmount == 0)//如果没有则不显示数字
-            amountText.enabled = false;
+        amountText.enabled = false;
         itemImage.enabled = false;
         amountText.text = string.Empty;
         button.interactable = false;

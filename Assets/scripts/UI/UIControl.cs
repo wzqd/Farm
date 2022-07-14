@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class UIControl : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private InventoryTab_SO playerInventoryTab_SO; //玩家物品栏列表
+
     void Start()
     {
         ShowPlayerToolBar();
@@ -18,10 +20,7 @@ public class UIControl : MonoBehaviour
 
     private void ShowPlayerToolBar()
     {
-        UIMgr.Instance.ShowPanel<PlayerToolBar>("PlayerToolBar",E_PanelLayer.Bot, (bar) =>
-        {
-            //调整UI位置
-            (bar.transform as RectTransform).sizeDelta = new Vector2(Settings.playerToolBarWidth, Settings.playerToolBarHeight); 
-        });
+        UIMgr.Instance.ShowPanel<PlayerToolBar>("PlayerToolBar", E_PanelLayer.Bot);
+
     }
 }

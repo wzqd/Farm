@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerInventoryTab_SO
   m_EditorClassIdentifier: 
   inventoryItemList:
-  - itemID: 0
-    amount: 0
+  - itemID: 1001
+    amount: 5
   - itemID: 0
     amount: 0
   - itemID: 0

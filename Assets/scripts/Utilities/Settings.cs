@@ -14,5 +14,9 @@ public class Settings
     //UI大小数据
     public const int playerToolBarWidth = 222; //物品栏宽度
     public const int playerToolBarHeight = 24; //物品栏高度
+    
+    //背包数据
+    public const int toolBarCapacity = 10; //物品栏大小
+    
 
 }

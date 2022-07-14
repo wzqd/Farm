@@ -22,12 +22,12 @@ public class BasePanel : MonoBehaviour
     ///键：hierarchy中控件名
     ///值：其中的控件，用list存储是因为可能是组合控件
     /// </summary>
-    private Dictionary<string, List<UIBehaviour>> UIComponentsDict = new Dictionary<string, List<UIBehaviour>>();
+    public Dictionary<string, List<UIBehaviour>> UIComponentsDict = new Dictionary<string, List<UIBehaviour>>();
     
     /// <summary>
     /// 虚函数 生命周期函数
     /// </summary>
-    protected void Awake()
+    protected virtual void Awake()
     {
         //因为是虚函数，注意重写时要保留base
         //开始时向字典中加入

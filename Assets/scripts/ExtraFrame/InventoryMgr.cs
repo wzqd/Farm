@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
 
@@ -22,8 +23,9 @@ public class InventoryMgr : Singleton<InventoryMgr>
 
         path = "Assets/GameData/Inventory/InventoryTabs/PlayerInventoryTab_SO.asset";
         playerInventoryTab_SO = AssetDatabase.LoadAssetAtPath(path, typeof(InventoryTab_SO)) as InventoryTab_SO; //得到文件
+
+        EventMgr.Instance.AddEventListener<GameObject>("PickUpItems", pickUpItemToBag); //监听捡起物品事件
         
-        EventMgr.Instance.AddEventListener<GameObject>("PickUpItems", addItemToInventory); //监听捡起物品事件
     }
 
     /// <summary>
@@ -40,25 +42,27 @@ public class InventoryMgr : Singleton<InventoryMgr>
     /// 拾取物品加入物品栏
     /// </summary>
     /// <param name="itemObj"></param>
-    private void addItemToInventory(GameObject itemObj)
+    private void pickUpItemToBag(GameObject itemObj)
     {
         Item item = itemObj.GetComponent<Item>();
         if(item is null) return;
         
         int index = GetIndexByItemID(item.itemID); //得到已有物品位置或者第一个空位
-        AddItemToInventoryAtIndex(item.itemID,index,1);
+        AddItemToInventorySOAtIndex(item.itemID,index,1); //添加一个（后可用参数改）
         
         if (item != null && item.itemDetails.canBePickedUp)
         {
             PoolMgr.Instance.PushObj(item.name, itemObj); //利用缓存池管理散落在地上的物品
         }
+        
+        EventMgr.Instance.EventTrigger("pickUpItemToBag",item.itemID); //触发加入背包事件
     }
     
     /// <summary>
     /// 检查背包是否有空位
     /// </summary>
     /// <returns>是否有空位</returns>
-    private bool CheckBagCapacity()
+    private bool CheckBagCapacityInSO()
     {
         foreach (InventoryItem item in playerInventoryTab_SO.inventoryItemList)
         {
@@ -72,7 +76,7 @@ public class InventoryMgr : Singleton<InventoryMgr>
     /// </summary>
     /// <param name="itemID">物品ID</param>
     /// <returns>若有返回序号，若无返回-1</returns>
-    private int GetIndexByItemID(int itemID)
+    public int GetIndexByItemID(int itemID)
     {
         for (int i = 0; i < playerInventoryTab_SO.inventoryItemList.Count; i++)
         {
@@ -81,6 +85,21 @@ public class InventoryMgr : Singleton<InventoryMgr>
         }
         return -1;
     }
+    
+    /// <summary>
+    /// 通过物品ID查找背包中物品数量
+    /// </summary>
+    /// <param name="itemID">物品ID</param>
+    /// <returns>返回物品数量，若0则表示没有改物品</returns>
+    public int GetQuantityByItemID(int itemID)
+    {
+        for (int i = 0; i < playerInventoryTab_SO.inventoryItemList.Count; i++)
+        {
+            if (playerInventoryTab_SO.inventoryItemList[i].itemID == itemID)
+                return playerInventoryTab_SO.inventoryItemList[i].amount;
+        }
+        return 0;
+    }
 
     /// <summary>
     /// 在指定背包序号位置添加物品
@@ -88,9 +107,9 @@ public class InventoryMgr : Singleton<InventoryMgr>
     /// <param name="itemID">物品ID</param>
     /// <param name="index">序号</param>
     /// <param name="amount">数量</param>
-    private void AddItemToInventoryAtIndex(int itemID, int index, int amount)
+    private void AddItemToInventorySOAtIndex(int itemID, int index, int amount)
     {
-        if (index == -1 && CheckBagCapacity()) //背包没有这个物品 同时背包有空位
+        if (index == -1 && CheckBagCapacityInSO()) //背包没有这个物品 同时背包有空位
         {
             InventoryItem newItem = new InventoryItem {itemID = itemID, amount = amount};
             for (int i = 0; i < playerInventoryTab_SO.inventoryItemList.Count; i++)

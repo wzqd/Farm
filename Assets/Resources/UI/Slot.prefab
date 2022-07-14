@@ -251,7 +251,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
   m_fontSizeMax: 0
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
@@ -430,6 +430,7 @@ MonoBehaviour:
   button: {fileID: 1944939895941492699}
   slotType: 0
   isSelected: 0
+  slotIndex: 0
   itemDetails:
     itemID: 0
     itemName: 
