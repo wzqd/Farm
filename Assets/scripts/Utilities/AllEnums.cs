@@ -4,3 +4,8 @@ public enum ItemType
     Hoe,Axe,Pickaxe,Sickle,WaterCan,
     HarvestableCrop,
 }
+
+public enum SlotType
+{
+    BagSlot, BoxSlot, ShopSlot
+}

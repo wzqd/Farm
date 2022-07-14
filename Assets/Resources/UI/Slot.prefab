@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 6289483154447412737}
   - component: {fileID: 4157711484651046049}
   - component: {fileID: 1944939895941492699}
+  - component: {fileID: 9151131579549600715}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -389,10 +390,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -411,3 +412,35 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9151131579549600715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152908228000455763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1cc2847939f8741a8dd5324c761970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemImage: {fileID: 6516635772627925454}
+  amountText: {fileID: 7921946247462736254}
+  slotHighlight: {fileID: 3897720135013586248}
+  button: {fileID: 1944939895941492699}
+  slotType: 0
+  isSelected: 0
+  itemDetails:
+    itemID: 0
+    itemName: 
+    itemType: 0
+    itemIcon: {fileID: 0}
+    itemSpriteInWorld: {fileID: 0}
+    itemDescription: 
+    itemUseRadius: 0
+    canBePickedUp: 0
+    canBeDropped: 0
+    canBeLifted: 0
+    itemPrice: 0
+    itemSellPercentage: 0
+  itemAmount: 0
