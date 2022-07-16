@@ -65,6 +65,7 @@ public class PlayerToolBar : BasePanel
     {
         ItemDetails itemDetails = InventoryMgr.Instance.GetItemDetails(itemID);//得到要捡起的物品信息
         int index = InventoryMgr.Instance.GetIndexByItemID(itemID);//得到要捡起的物品下标
+        if (index >= Settings.toolBarCapacity) return; //如果超出物品栏大小，直接返回
         int quantity = InventoryMgr.Instance.GetQuantityByItemID(itemID); //得到要捡起物品的数量
         ToolBarSlots[index].UpdateSlot(itemDetails, quantity);
 
