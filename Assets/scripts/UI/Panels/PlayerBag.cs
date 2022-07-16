@@ -8,6 +8,8 @@ public class PlayerBag : BasePanel
 {
     public List<Slot> BagSlots;  //背包格子
     private InventoryTab_SO playerInventoryTab_SO; //玩家物品栏列表
+
+    private Slot currentSelectedSlot; //现在被选中的格子
     
    public override void Show()
    {
@@ -25,9 +27,14 @@ public class PlayerBag : BasePanel
         
         for (int i = 0; i < Settings.BagCapacity; i++)
         {
-            BagSlots.Add(GetUIComponent<Button>("Slot (" + i  +")").GetComponent<Slot>()); //得到背包slot（从10开始）
+            BagSlots.Add(GetUIComponent<Button>("Slot (" + i  +")").GetComponent<Slot>()); //得到背包slot
+            
+            BagSlots[i].slotIndex = i; //设置下标
+            BagSlots[i].slotType = SlotType.BagSlot; //设置格子类型
         }
 
+        EventMgr.Instance.AddEventListener<int>("BagSlotHighlight",BagSlotHighlight);
+        
         UpdateInventoryUI(playerInventoryTab_SO.inventoryItemList); //更新所有格子
     }
     
@@ -62,6 +69,29 @@ public class PlayerBag : BasePanel
         int index = InventoryMgr.Instance.GetIndexByItemID(itemID);//得到要捡起的物品下标
         int quantity = InventoryMgr.Instance.GetQuantityByItemID(itemID); //得到要捡起物品的数量
         BagSlots[index].UpdateSlot(itemDetails, quantity);
+    }
+
+    /// <summary>
+    /// 背包格子点选高亮
+    /// </summary>
+    /// <param name="index"></param>
+    private void BagSlotHighlight(int index)
+    {
+        if (currentSelectedSlot is null) //第一次选中
+        {
+            currentSelectedSlot = BagSlots[index];
+            currentSelectedSlot.isSelected = true;
+            currentSelectedSlot.slotHighlight.gameObject.SetActive(true);
+        }
+
+        if (BagSlots[index] != currentSelectedSlot) //如果点选了新的格子
+        {
+            currentSelectedSlot.isSelected = false;
+            currentSelectedSlot.slotHighlight.gameObject.SetActive(false); //取消之前的选中
+            currentSelectedSlot = BagSlots[index]; //赋值为新的格子
+            currentSelectedSlot.isSelected = true;
+            currentSelectedSlot.slotHighlight.gameObject.SetActive(true); //选中新的格子
+        }
 
     }
 }

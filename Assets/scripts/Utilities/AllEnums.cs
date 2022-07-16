@@ -7,5 +7,5 @@ public enum ItemType
 
 public enum SlotType
 {
-    BagSlot, BoxSlot, ShopSlot
+    ToolBarSlot,BagSlot, BoxSlot, ShopSlot
 }

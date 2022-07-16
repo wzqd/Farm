@@ -1,16 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerClickHandler
 {
     [Header("组件获取")]
     [SerializeField] private Image itemImage; //物品图片
     [SerializeField] private TextMeshProUGUI amountText; //数量文字
-    [SerializeField] private Image slotHighlight; //高亮边框图片
     [SerializeField] private Button button; //按钮组件
+    public Image slotHighlight; //高亮边框图片
+    
     [Header("格子类型")]
     public SlotType slotType; //格子枚举类型
     public bool isSelected; //是否被选中
@@ -44,6 +49,7 @@ public class Slot : MonoBehaviour
         amountText.text = amount.ToString();
         amountText.enabled = itemAmount > 1; //如果没有或者只有一个则不显示数字
         button.interactable = true;
+        
     }
 
     /// <summary>
@@ -57,5 +63,22 @@ public class Slot : MonoBehaviour
         itemImage.enabled = false;
         amountText.text = string.Empty;
         button.interactable = false;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        switch (slotType)
+        {
+            case SlotType.ToolBarSlot:
+                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮事件
+                break;
+            case SlotType.BagSlot:
+                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮事件（要保证格子已经分配了下标）
+                break;
+            case SlotType.BoxSlot:
+                break;
+            case SlotType.ShopSlot:
+                break;
+        }
     }
 }

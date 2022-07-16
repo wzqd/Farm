@@ -8,6 +8,8 @@ public class PlayerToolBar : BasePanel
 {
     public List<Slot> ToolBarSlots; //所有的格子
     private InventoryTab_SO playerInventoryTab_SO; //玩家物品栏列表
+    
+    private Slot currentSelectedSlot; //现在被选中的格子
 
     protected override void Awake()
     {
@@ -23,8 +25,11 @@ public class PlayerToolBar : BasePanel
             ToolBarSlots.Add(GetUIComponent<Button>("Slot (" + i  +")").GetComponent<Slot>()); //得到所有slot （保证命名从0开始）
 
             ToolBarSlots[i].slotIndex = i; //设置下标
+            ToolBarSlots[i].slotType = SlotType.ToolBarSlot; //设置格子类型
         }
-
+        
+        EventMgr.Instance.AddEventListener<int>("ToolBarSlotHighlight", ToolBarSlotHighlight);
+        
         UpdateInventoryUI(playerInventoryTab_SO.inventoryItemList); //更新所有格子
     }
 
@@ -68,6 +73,24 @@ public class PlayerToolBar : BasePanel
         if (index >= Settings.toolBarCapacity) return; //如果超出物品栏大小，直接返回
         int quantity = InventoryMgr.Instance.GetQuantityByItemID(itemID); //得到要捡起物品的数量
         ToolBarSlots[index].UpdateSlot(itemDetails, quantity);
+    }
 
+    private void ToolBarSlotHighlight(int index)
+    {
+        if (currentSelectedSlot is null) //第一次选中
+        {
+            currentSelectedSlot = ToolBarSlots[index];
+            currentSelectedSlot.isSelected = true;
+            currentSelectedSlot.slotHighlight.gameObject.SetActive(true);
+        }
+
+        if (ToolBarSlots[index] != currentSelectedSlot) //如果点选了新的格子
+        {
+            currentSelectedSlot.isSelected = false;
+            currentSelectedSlot.slotHighlight.gameObject.SetActive(false); //取消之前的选中
+            currentSelectedSlot = ToolBarSlots[index]; //赋值为新的格子
+            currentSelectedSlot.isSelected = true;
+            currentSelectedSlot.slotHighlight.gameObject.SetActive(true); //选中新的格子
+        }
     }
 }

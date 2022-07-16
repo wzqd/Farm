@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class UIControl : MonoBehaviour
 {
-    private InventoryTab_SO playerInventoryTab_SO; //玩家物品栏列表
-
+    private bool bagIsShown;
+    private bool bagIsOpened;
+    
+    
     void Start()
     {
         ShowPlayerToolBar();
@@ -16,10 +18,7 @@ public class UIControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ShowPlayerBag();
-        }
+        OpenClosePlayerBag();
     }
 
     private void ShowPlayerToolBar()
@@ -27,8 +26,31 @@ public class UIControl : MonoBehaviour
         UIMgr.Instance.ShowPanel<PlayerToolBar>("PlayerToolBar", E_PanelLayer.Bot);
     }
 
-    private void ShowPlayerBag()
+    private void OpenClosePlayerBag()
     {
-        UIMgr.Instance.ShowPanel<PlayerBag>("PlayerBag", E_PanelLayer.Mid);
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!bagIsShown) //如果还未加载，加载面板
+            {
+                UIMgr.Instance.ShowPanel<PlayerBag>("PlayerBag", E_PanelLayer.Mid);
+                bagIsShown = true;
+                bagIsOpened = true;
+                return;
+            }
+
+            if (bagIsOpened) //如果正打开，关闭
+            {
+                UIMgr.Instance.GetPanel<PlayerBag>("PlayerBag").gameObject.SetActive(false);
+                bagIsOpened = false;
+            }
+            else //如果关闭，则打开
+            {
+                UIMgr.Instance.GetPanel<PlayerBag>("PlayerBag").gameObject.SetActive(true);
+                bagIsOpened = true;
+            }
+            
+        }
+
+        
     }
 }
