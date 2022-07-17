@@ -13,6 +13,7 @@ public class UIControl : MonoBehaviour
     void Start()
     {
         ShowPlayerToolBar();
+        ShowDragPanel();
     }
 
     // Update is called once per frame
@@ -26,9 +27,17 @@ public class UIControl : MonoBehaviour
         UIMgr.Instance.ShowPanel<PlayerToolBar>("PlayerToolBar", E_PanelLayer.Bot);
     }
 
+    private void ShowDragPanel()
+    {
+        UIMgr.Instance.ShowPanel<DragPanel>("DragPanel", E_PanelLayer.Top);
+    }
+
+    /// <summary>
+    /// 开关玩家背包
+    /// </summary>
     private void OpenClosePlayerBag()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)) //之后可以设置键位
         {
             if (!bagIsShown) //如果还未加载，加载面板
             {
