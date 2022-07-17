@@ -604,15 +604,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4686836921534410373, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4686836921534410373, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4686836921534410373, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4686836921534410373, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -634,6 +634,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4911039421417640272, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
+      propertyPath: m_Softness.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911039421417640272, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
+      propertyPath: m_Softness.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5507499848656939810, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -946,7 +954,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4911039421417640272, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 91f4d06bd4171354680f98169a2d6a99, type: 3}
 --- !u!224 &1213151667 stripped
 RectTransform:
@@ -1408,6 +1417,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1213151667}
     m_Modifications:
+    - target: {fileID: 3896328996361461229, guid: 616e77222cbd1db4fac697d37cd52826, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 224.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3896328996361461229, guid: 616e77222cbd1db4fac697d37cd52826, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -3.6
+      objectReference: {fileID: 0}
     - target: {fileID: 3896328997614937716, guid: 616e77222cbd1db4fac697d37cd52826, type: 3}
       propertyPath: m_Name
       value: DragPanel

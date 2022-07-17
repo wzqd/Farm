@@ -29,6 +29,9 @@ public class PlayerToolBar : BasePanel
         }
         
         EventMgr.Instance.AddEventListener<int>("ToolBarSlotHighlight", ToolBarSlotHighlight);
+        EventMgr.Instance.AddEventListener<Slot[]>("ToolBarSlotEndDrag", ToolBarSlotEndDrag);
+        EventMgr.Instance.AddEventListener<Slot>("BagSlotBeginDrag", BagSlotBeginDrag);
+        
         
         UpdateInventoryUI(playerInventoryTab_SO.inventoryItemList); //更新所有格子
     }
@@ -93,4 +96,32 @@ public class PlayerToolBar : BasePanel
             currentSelectedSlot.slotHighlight.gameObject.SetActive(true); //选中新的格子
         }
     }
+    
+    /// <summary>
+    /// 上面格子开始拖拽
+    /// </summary>
+    /// <param name="slot"></param>
+   private void BagSlotBeginDrag(Slot slot)
+    {
+        slot.UpdateEmptySlot(); //UI上清空该格子
+        InventoryItem emptyItem = new InventoryItem {itemID = 0, amount = 0};
+        playerInventoryTab_SO.inventoryItemList[slot.slotIndex] = emptyItem; //清空列表数据
+    }
+   
+   
+    /// <summary>
+    /// 格子结束拖拽时停在上面
+    /// </summary>
+    private void ToolBarSlotEndDrag(Slot[] twoSlots)
+    {
+        int endIndex = twoSlots[1].slotIndex;
+
+        InventoryItem newItem = new InventoryItem
+            {itemID = twoSlots[0].itemDetails.itemID, amount = twoSlots[0].itemAmount};
+        playerInventoryTab_SO.inventoryItemList[endIndex] = newItem; //更新列表中数据
+        
+        ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount); //更新ui
+    }
+
+ 
 }

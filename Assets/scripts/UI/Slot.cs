@@ -74,10 +74,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
         switch (slotType)
         {
             case SlotType.ToolBarSlot:
-                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮事件
+                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮选中事件
                 break;
             case SlotType.BagSlot:
-                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮事件（要保证格子已经分配了下标）
+                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
                 break;
             case SlotType.BoxSlot:
                 break;
@@ -107,10 +107,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
         switch (slotType) //开始拖拽和点击一样都要触发高亮
         {
             case SlotType.ToolBarSlot:
-                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮事件
+                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮选中事件
+                
+                EventMgr.Instance.EventTrigger("ToolBarSlotBeginDrag",this);//触发开始拖拽至工具栏事件
                 break;
             case SlotType.BagSlot:
-                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮事件（要保证格子已经分配了下标）
+                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
+                
+                EventMgr.Instance.EventTrigger("BagSlotBeginDrag",this);//触发开始拖拽至背包事件
                 break;
             case SlotType.BoxSlot:
                 break;
@@ -129,8 +133,31 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
     /// <exception cref="NotImplementedException"></exception>
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (itemAmount == 0) return; //如果拖拽的是空格子，返回
-        EventMgr.Instance.EventTrigger("SlotEndDrag");
-        Debug.Log(eventData.pointerCurrentRaycast.gameObject);
+        if (itemAmount == 0) return; //如果最初拖拽的是空格子，返回
+        EventMgr.Instance.EventTrigger("SlotEndDrag"); //隐藏图片
+
+        GameObject endSlotObj = eventData.pointerCurrentRaycast.gameObject; //得到结束拖拽时的物体
+        if (endSlotObj is null) return;
+        Slot endSlot = endSlotObj.GetComponent<Slot>(); //得到结束拖拽时slot脚本
+        if (endSlot is null) return;
+        
+        switch (endSlot.slotType) //结束拖拽和点击一样都要触发高亮
+        {
+            case SlotType.ToolBarSlot:
+                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", endSlot.slotIndex); //触发工具栏高亮选中事件
+                //触发结束拖拽至工具栏事件，传过去结束时碰到的UI脚本
+                EventMgr.Instance.EventTrigger("ToolBarSlotEndDrag",new[] {this,endSlot});
+                break;
+            case SlotType.BagSlot:
+                EventMgr.Instance.EventTrigger("BagSlotHighlight",endSlot. slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
+                //触发结束拖拽至背包事件
+                EventMgr.Instance.EventTrigger("BagSlotEndDrag",new[] {this,endSlot});
+                break;
+            case SlotType.BoxSlot:
+                break;
+            case SlotType.ShopSlot:
+                break;
+        }
+        
     }
 }

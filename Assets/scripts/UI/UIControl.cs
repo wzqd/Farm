@@ -42,6 +42,7 @@ public class UIControl : MonoBehaviour
             if (!bagIsShown) //如果还未加载，加载面板
             {
                 UIMgr.Instance.ShowPanel<PlayerBag>("PlayerBag", E_PanelLayer.Mid);
+                UIMgr.Instance.GetPanel<PlayerToolBar>("PlayerToolBar").gameObject.SetActive(false); //隐藏物品栏
                 bagIsShown = true;
                 bagIsOpened = true;
                 return;
@@ -49,12 +50,14 @@ public class UIControl : MonoBehaviour
 
             if (bagIsOpened) //如果正打开，关闭
             {
-                UIMgr.Instance.GetPanel<PlayerBag>("PlayerBag").gameObject.SetActive(false);
+                UIMgr.Instance.GetPanel<PlayerBag>("PlayerBag").gameObject.SetActive(false); //隐藏面板
+                UIMgr.Instance.GetPanel<PlayerToolBar>("PlayerToolBar").gameObject.SetActive(true); //显示物品栏
                 bagIsOpened = false;
             }
             else //如果关闭，则打开
             {
-                UIMgr.Instance.GetPanel<PlayerBag>("PlayerBag").gameObject.SetActive(true);
+                UIMgr.Instance.GetPanel<PlayerBag>("PlayerBag").gameObject.SetActive(true); //显示面板
+                UIMgr.Instance.GetPanel<PlayerToolBar>("PlayerToolBar").gameObject.SetActive(false); //隐藏物品栏
                 bagIsOpened = true;
             }
             

@@ -28,14 +28,15 @@ public class DragPanel : BasePanel
     {
         dragImage.sprite = slot.itemImage.sprite;
         dragImage.SetNativeSize();
-        dragImage.enabled = true;
+        dragImage.enabled = true; //设置图片并显示
         
         slot.isSelected = true;
     }
 
     private void SlotEndDrag()
     {
-        dragImage.enabled = false;
+        dragImage.enabled = false; //隐藏拖拽的图片
+
     }
     
 }

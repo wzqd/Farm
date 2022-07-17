@@ -34,6 +34,8 @@ public class PlayerBag : BasePanel
         }
 
         EventMgr.Instance.AddEventListener<int>("BagSlotHighlight",BagSlotHighlight);
+        EventMgr.Instance.AddEventListener<Slot[]>("BagSlotEndDrag", BagSlotEndDrag);
+        EventMgr.Instance.AddEventListener<Slot>("BagSlotBeginDrag", BagSlotBeginDrag);
         
         UpdateInventoryUI(playerInventoryTab_SO.inventoryItemList); //更新所有格子
     }
@@ -92,6 +94,33 @@ public class PlayerBag : BasePanel
             currentSelectedSlot.isSelected = true;
             currentSelectedSlot.slotHighlight.gameObject.SetActive(true); //选中新的格子
         }
+    }
 
+    /// <summary>
+    /// 背包中开始拖拽
+    /// </summary>
+    /// <param name="slot"></param>
+    private void BagSlotBeginDrag(Slot slot)
+    {
+        slot.UpdateEmptySlot(); //UI上清空该格子
+        
+        InventoryItem emptyItem = new InventoryItem {itemID = 0, amount = 0};
+        playerInventoryTab_SO.inventoryItemList[slot.slotIndex] = emptyItem;//清空列表数据
+    }
+    
+    
+    /// <summary>
+    /// 背包中结束拖拽
+    /// </summary>
+    /// <param name="twoSlots"></param>
+    private void BagSlotEndDrag(Slot[] twoSlots)
+    {
+        int endIndex = twoSlots[1].slotIndex;
+
+        InventoryItem newItem = new InventoryItem
+            {itemID = twoSlots[0].itemDetails.itemID, amount = twoSlots[0].itemAmount};
+        playerInventoryTab_SO.inventoryItemList[endIndex] = newItem; //更新列表中数据
+        
+        BagSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount); //更新ui
     }
 }
