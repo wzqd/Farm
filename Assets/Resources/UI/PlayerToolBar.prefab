@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5863316525356892558}
   - component: {fileID: 5842561914963901165}
   - component: {fileID: 2083821294992425504}
+  - component: {fileID: 2322064860285318704}
   m_Layer: 5
   m_Name: PlayerToolBar
   m_TagString: Untagged
@@ -127,7 +128,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92adb0ef6578a0d44b24268c4c893676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToolBar: []
+  ToolBarSlots: []
+--- !u!225 &2322064860285318704
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3623475218944744918}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3935128144405612178
 GameObject:
   m_ObjectHideFlags: 0

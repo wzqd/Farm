@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class PlayerBag : BasePanel
 {
     public List<Slot> BagSlots;  //背包格子
-    private InventoryTab_SO playerInventoryTab_SO; //玩家物品栏列表
+    private InventoryTab_SO playerInventory_SO; //玩家物品栏列表
 
     private Slot currentSelectedSlot; //现在被选中的格子
+    private InventoryContainerType inventoryContainerType = InventoryContainerType.Bag; //列表类型
     
    public override void Show()
    {
@@ -22,7 +23,7 @@ public class PlayerBag : BasePanel
         base.Awake(); //覆写虚函数
 
         string path = "Assets/GameData/Inventory/InventoryTabs/PlayerInventoryTab_SO.asset";
-        playerInventoryTab_SO = AssetDatabase.LoadAssetAtPath(path, typeof(InventoryTab_SO)) as InventoryTab_SO; //得到文件
+        playerInventory_SO = AssetDatabase.LoadAssetAtPath(path, typeof(InventoryTab_SO)) as InventoryTab_SO; //得到文件
 
         
         for (int i = 0; i < Settings.BagCapacity; i++)
@@ -37,28 +38,20 @@ public class PlayerBag : BasePanel
         EventMgr.Instance.AddEventListener<Slot[]>("BagSlotEndDrag", BagSlotEndDrag);
         EventMgr.Instance.AddEventListener<Slot>("BagSlotBeginDrag", BagSlotBeginDrag);
         
-        UpdateInventoryUI(playerInventoryTab_SO.inventoryItemList); //更新所有格子
+        EventMgr.Instance.AddEventListener<int[]>("BagUIUpdate", BagUIUpdate); //更新第i位的ui
+        EventMgr.Instance.AddEventListener<int>("BagUIUpdateEmpty", BagUIUpdateEmpty); //更新第i位的ui
+        
     }
     
  
-    /// <summary>
-    /// 更新所有物品栏UI信息
-    /// </summary>
-    /// <param name="inventoryList"></param>
-    private void UpdateInventoryUI(List<InventoryItem> inventoryList)
+    private void BagUIUpdate(int[] info) //info第一个位列表下标，第二个为id，第三个为数量
     {
-        for (int i = 0; i < Settings.BagCapacity; i++)
-        {
-            if (inventoryList[i].amount > 0) //如果有物品，更新至现有信息
-            {
-                ItemDetails itemDetails = InventoryMgr.Instance.GetItemDetails(inventoryList[i].itemID);
-                BagSlots[i].UpdateSlot(itemDetails, inventoryList[i].amount);
-            }
-            else //若无，清空
-            {
-                BagSlots[i].UpdateEmptySlot();
-            }
-        }
+        BagSlots[info[0]].UpdateSlot(InventoryMgr.Instance.GetItemDetails(info[1]), info[2]);
+    }
+
+    private void BagUIUpdateEmpty(int index)
+    {
+        BagSlots[index].UpdateEmptySlot();
     }
 
     /// <summary>
@@ -102,10 +95,10 @@ public class PlayerBag : BasePanel
     /// <param name="slot"></param>
     private void BagSlotBeginDrag(Slot slot)
     {
-        slot.UpdateEmptySlot(); //UI上清空该格子
+        BagSlots[slot.slotIndex].UpdateEmptySlot(); //UI上清空对应id格子
         
         InventoryItem emptyItem = new InventoryItem {itemID = 0, amount = 0};
-        playerInventoryTab_SO.inventoryItemList[slot.slotIndex] = emptyItem;//清空列表数据
+        playerInventory_SO.inventoryItemList[slot.slotIndex] = emptyItem;//清空列表数据
     }
     
     
@@ -117,10 +110,29 @@ public class PlayerBag : BasePanel
     {
         int endIndex = twoSlots[1].slotIndex;
 
-        InventoryItem newItem = new InventoryItem
-            {itemID = twoSlots[0].itemDetails.itemID, amount = twoSlots[0].itemAmount};
-        playerInventoryTab_SO.inventoryItemList[endIndex] = newItem; //更新列表中数据
+        if (twoSlots[0].itemDetails.itemID == twoSlots[1].itemDetails.itemID) //两个是同一种东西
+        {
+            //更新列表数据
+            UpdateBagList (twoSlots[0].itemDetails.itemID, twoSlots[0].itemAmount + twoSlots[1].itemAmount, endIndex);
+            
+        }
+        else //两个不同东西
+        {
+            UpdateBagList(twoSlots[0].itemDetails.itemID, twoSlots[0].itemAmount, endIndex);
+        }
         
         BagSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount); //更新ui
+    }
+    
+    /// <summary>
+    /// 更新背包数据
+    /// 封装了一遍inventoryMgr中的方法
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="amount"></param>
+    /// <param name="index"></param>
+    private void UpdateBagList(int id, int amount, int index)
+    {
+        InventoryMgr.Instance.UpdateListInfo(inventoryContainerType, id, amount, index);
     }
 }

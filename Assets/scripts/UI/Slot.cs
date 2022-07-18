@@ -110,11 +110,16 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
                 EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮选中事件
                 
                 EventMgr.Instance.EventTrigger("ToolBarSlotBeginDrag",this);//触发开始拖拽至工具栏事件
+                EventMgr.Instance.EventTrigger("BagSlotBeginDrag",this);//同时更新背包工具栏
                 break;
             case SlotType.BagSlot:
                 EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
                 
                 EventMgr.Instance.EventTrigger("BagSlotBeginDrag",this);//触发开始拖拽至背包事件
+                if (slotIndex < Settings.toolBarCapacity)//如果拖拽背包工具栏部分
+                {
+                    EventMgr.Instance.EventTrigger("ToolBarSlotBeginDrag",this);//同时更新背包
+                }
                 break;
             case SlotType.BoxSlot:
                 break;
@@ -145,14 +150,25 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
         {
             case SlotType.ToolBarSlot:
                 EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", endSlot.slotIndex); //触发工具栏高亮选中事件
+                
                 //触发结束拖拽至工具栏事件，传过去结束时碰到的UI脚本
                 EventMgr.Instance.EventTrigger("ToolBarSlotEndDrag",new[] {this,endSlot});
+                EventMgr.Instance.EventTrigger("BagSlotEndDrag",new[] {this,endSlot}); //同时更新背包中的工具栏部分
+                EventMgr.Instance.EventTrigger("BagSlotHighlight", endSlot.slotIndex); //同时高亮背包中部分
                 break;
+            
             case SlotType.BagSlot:
                 EventMgr.Instance.EventTrigger("BagSlotHighlight",endSlot. slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
+                
                 //触发结束拖拽至背包事件
                 EventMgr.Instance.EventTrigger("BagSlotEndDrag",new[] {this,endSlot});
+                if (endSlot.slotIndex < Settings.toolBarCapacity) //如果落在背包工具栏部分
+                {
+                    EventMgr.Instance.EventTrigger("ToolBarSlotEndDrag",new[] {this,endSlot}); //更新工具栏
+                    EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", endSlot.slotIndex); //同时高亮物品栏
+                }
                 break;
+            
             case SlotType.BoxSlot:
                 break;
             case SlotType.ShopSlot:

@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 4686836921534410375}
   - component: {fileID: 4686836921534410374}
   - component: {fileID: 500355266088761833}
+  - component: {fileID: 2959846464960450630}
   m_Layer: 5
   m_Name: PlayerBag
   m_TagString: Untagged
@@ -169,6 +170,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BagSlots: []
+--- !u!225 &2959846464960450630
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686836921534410372}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4686836921637002075
 GameObject:
   m_ObjectHideFlags: 0
