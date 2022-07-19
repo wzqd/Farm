@@ -168,7 +168,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
                 
                 //触发结束拖拽至工具栏事件，传过去结束时碰到的UI脚本
                 EventMgr.Instance.EventTrigger("ToolBarSlotEndDrag",new[] {this,endSlot});
-                EventMgr.Instance.EventTrigger("BagSlotEndDrag",new[] {this,endSlot}); //同时更新背包中的工具栏部分
                 EventMgr.Instance.EventTrigger("BagSlotHighlight", endSlot.slotIndex); //同时高亮背包中部分
                 break;
             
@@ -179,7 +178,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
                 EventMgr.Instance.EventTrigger("BagSlotEndDrag",new[] {this,endSlot});
                 if (endSlot.slotIndex < Settings.toolBarCapacity) //如果落在背包工具栏部分
                 {
-                    EventMgr.Instance.EventTrigger("ToolBarSlotEndDrag",new[] {this,endSlot}); //更新工具栏
                     EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", endSlot.slotIndex); //同时高亮物品栏
                 }
                 break;

@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class UIControl : MonoBehaviour
 {
-    private bool bagIsShown;
     private bool bagIsOpened;
 
     private GameObject playertoolbar;
@@ -20,6 +19,7 @@ public class UIControl : MonoBehaviour
     {
         ShowPlayerToolBar();
         ShowDragPanel();
+        ShowPlayerBag();
         
     }
 
@@ -40,6 +40,18 @@ public class UIControl : MonoBehaviour
         
     }
 
+    private void ShowPlayerBag()
+    {
+        UIMgr.Instance.ShowPanel<PlayerBag>("PlayerBag", E_PanelLayer.Mid, (bag) =>
+        {
+            //得到CanvasGroup用于隐藏
+            playerBagCanvasGroup = bag.GetComponent<CanvasGroup>();
+            EventMgr.Instance.EventTrigger("UpdateUIByInventoryInfo", SlotType.BagSlot); //触发更新UI
+            InactivePanel(playerBagCanvasGroup); //开始时隐藏面板
+            bagIsOpened = false;
+        });
+    }
+
     private void ShowDragPanel()
     {
         UIMgr.Instance.ShowPanel<DragPanel>("DragPanel", E_PanelLayer.Top);
@@ -52,21 +64,6 @@ public class UIControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E)) //之后可以设置键位
         {
-            if (!bagIsShown) //如果还未加载，加载面板
-            {
-                UIMgr.Instance.ShowPanel<PlayerBag>("PlayerBag", E_PanelLayer.Mid, (bag) =>
-                {
-                    //得到CanvasGroup用于隐藏
-                    playerBagCanvasGroup = bag.GetComponent<CanvasGroup>();
-                    EventMgr.Instance.EventTrigger("UpdateUIByInventoryInfo", SlotType.BagSlot); //触发更新UI
-                });
-                
-                InactivePanel(playerToolBarCanvasGroup); //隐藏物品栏
-                bagIsShown = true;
-                bagIsOpened = true;
-                return;
-            }
-
             if (bagIsOpened) //如果正打开，关闭
             {
                 InactivePanel(playerBagCanvasGroup); //隐藏面板

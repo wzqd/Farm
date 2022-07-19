@@ -124,17 +124,23 @@ public class PlayerToolBar : BasePanel
     private void ToolBarSlotEndDrag(Slot[] twoSlots) //第一个为起始slot，第二个为最终slot
     {
 
-        int endIndex = twoSlots[1].slotIndex;
         int startIndex = twoSlots[0].slotIndex;
+        int startSlotItemID = twoSlots[0].itemDetails.itemID;
+        int startSlotAmount = twoSlots[0].itemAmount;
+        
+        int endIndex = twoSlots[1].slotIndex;
+        int endSlotItemID = twoSlots[1].itemDetails.itemID; //暂存数量和id
+        int endSlotAmount = twoSlots[1].itemAmount;
 
-        if (twoSlots[0].itemDetails.itemID == twoSlots[1].itemDetails.itemID || twoSlots[1].itemDetails.itemID == 0) //两个是同一种东西 或者 后者是空格子（空格子不能通过inventoryMgr得details
+        if (startSlotItemID == endSlotItemID || endSlotAmount == 0) //两个是同一种东西 或者 后者是空格子（空格子不能通过inventoryMgr得details
         {
             //更新列表数据
-            UpdateBagList(twoSlots[0].itemDetails.itemID, twoSlots[0].itemAmount + twoSlots[1].itemAmount, endIndex);
-            ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount + twoSlots[1].itemAmount); //更新ui
+            UpdateBagList(startSlotItemID, startSlotAmount + endSlotAmount, endIndex);
+            ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, startSlotAmount + endSlotAmount); //更新ui
+            EventMgr.Instance.EventTrigger("BagUIUpdate", new[] {endIndex, startSlotItemID, startSlotAmount});//更新背包ui
             
             InventoryItem emptyItem = new InventoryItem {itemID = 0, amount = 0};
-            playerInventory_SO.inventoryItemList[twoSlots[0].slotIndex] = emptyItem;//清空原先列表数据（数据同步）
+            playerInventory_SO.inventoryItemList[startIndex] = emptyItem;//清空原先列表数据（数据同步）
         
             twoSlots[0].EmptySlotQuantity();//清空原先格子数量
             EventMgr.Instance.EventTrigger("BagUIUpdateQuantityEmpty", startIndex); //清空背包中物品栏数量（UI不同步）
@@ -142,21 +148,21 @@ public class PlayerToolBar : BasePanel
         }
         else //两个不同东西
         {
-            int endSlotItemID = twoSlots[1].itemDetails.itemID; //暂存id
-            int endSlotAmount = twoSlots[1].itemAmount;
-
-
-            UpdateBagList(twoSlots[0].itemDetails.itemID, twoSlots[0].itemAmount, endIndex); //更新放下时的数据
-            ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount); //更新放下时ui
             
-            switch (twoSlots[0].slotType) //判断原来的类型
+            UpdateBagList(startSlotItemID, startSlotAmount, endIndex); //更新放下时的数据
+            ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, startSlotAmount); //更新放下时ui
+
+            EventMgr.Instance.EventTrigger("BagUIUpdate", new[] {endIndex, startSlotItemID, startSlotAmount});
+
+            switch (twoSlots[0].slotType) //判断原来的类型,并且更新原来的格子和数据
             {
-                 case SlotType.ToolBarSlot: 
-                     InventoryMgr.Instance.UpdateListInfo(InventoryContainerType.Bag, endSlotItemID, endSlotAmount,
+                case SlotType.ToolBarSlot:
+                    InventoryMgr.Instance.UpdateListInfo(InventoryContainerType.Bag, endSlotItemID, endSlotAmount,
                          startIndex);
-                     EventMgr.Instance.EventTrigger("ToolBarUIUpdate", new[] {startIndex, endSlotItemID, endSlotAmount});
-                     EventMgr.Instance.EventTrigger("BagUIUpdate", new[] {startIndex, endSlotItemID, endSlotAmount});
-                     break;
+                    EventMgr.Instance.EventTrigger("ToolBarUIUpdate", new[] {startIndex, endSlotItemID, endSlotAmount});
+
+                    EventMgr.Instance.EventTrigger("BagUIUpdate", new[] {startIndex, endSlotItemID, endSlotAmount});
+                    break;
                 // case SlotType.BagSlot:不需要，因为是同一个数据结构（也不可能同时开启）
                 //     break;
                 case SlotType.BoxSlot:
