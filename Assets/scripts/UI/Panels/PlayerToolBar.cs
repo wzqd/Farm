@@ -35,6 +35,7 @@ public class PlayerToolBar : BasePanel
         
         EventMgr.Instance.AddEventListener<int[]>("ToolBarUIUpdate", ToolBarUIUpdate); //更新第i位的ui
         EventMgr.Instance.AddEventListener<int>("ToolBarUIUpdateEmpty", ToolBarUIUpdateEmpty); //更新第i位的ui
+        EventMgr.Instance.AddEventListener<int>("ToolBarUIUpdateQuantityEmpty", ToolBarUIUpdateQuantityEmpty); //更新第i位的ui
         
     }
 
@@ -47,14 +48,31 @@ public class PlayerToolBar : BasePanel
         
     }
 
+    /// <summary>
+    /// 更新UI信息
+    /// </summary>
+    /// <param name="info"></param>
     private void ToolBarUIUpdate(int[] info) //info第一个位列表下标，第二个为id，第三个为数量
     {
         ToolBarSlots[info[0]].UpdateSlot(InventoryMgr.Instance.GetItemDetails(info[1]), info[2]);
     }
 
+    /// <summary>
+    /// 清空UI信息
+    /// </summary>
+    /// <param name="index"></param>
     private void ToolBarUIUpdateEmpty(int index)
     {
         ToolBarSlots[index].UpdateEmptySlot();
+    }
+    
+    /// <summary>
+    /// 清空UI上数量
+    /// </summary>
+    /// <param name="index"></param>
+    private void ToolBarUIUpdateQuantityEmpty(int index)
+    {
+        ToolBarSlots[index].EmptySlotQuantity();
     }
 
     /// <summary>
@@ -95,31 +113,66 @@ public class PlayerToolBar : BasePanel
     /// <param name="slot"></param>
    private void ToolBarSlotBeginDrag(Slot slot)
     {
-        ToolBarSlots[slot.slotIndex].UpdateEmptySlot(); //UI上清空对应id格子
+        ToolBarSlots[slot.slotIndex].UpdateEmptySlot(); //UI上清空对应id格子UI
         
-        InventoryItem emptyItem = new InventoryItem {itemID = 0, amount = 0};
-        playerInventory_SO.inventoryItemList[slot.slotIndex] = emptyItem; //清空列表数据
     }
    
    
     /// <summary>
     /// 格子结束拖拽时停在上面
     /// </summary>
-    private void ToolBarSlotEndDrag(Slot[] twoSlots)
+    private void ToolBarSlotEndDrag(Slot[] twoSlots) //第一个为起始slot，第二个为最终slot
     {
-        int endIndex = twoSlots[1].slotIndex;
 
-        if (twoSlots[0].itemDetails.itemID == twoSlots[1].itemDetails.itemID) //两个是同一种东西
+        int endIndex = twoSlots[1].slotIndex;
+        int startIndex = twoSlots[0].slotIndex;
+
+        if (twoSlots[0].itemDetails.itemID == twoSlots[1].itemDetails.itemID || twoSlots[1].itemDetails.itemID == 0) //两个是同一种东西 或者 后者是空格子（空格子不能通过inventoryMgr得details
         {
             //更新列表数据
             UpdateBagList(twoSlots[0].itemDetails.itemID, twoSlots[0].itemAmount + twoSlots[1].itemAmount, endIndex);
+            ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount + twoSlots[1].itemAmount); //更新ui
+            
+            InventoryItem emptyItem = new InventoryItem {itemID = 0, amount = 0};
+            playerInventory_SO.inventoryItemList[twoSlots[0].slotIndex] = emptyItem;//清空原先列表数据（数据同步）
+        
+            twoSlots[0].EmptySlotQuantity();//清空原先格子数量
+            EventMgr.Instance.EventTrigger("BagUIUpdateQuantityEmpty", startIndex); //清空背包中物品栏数量（UI不同步）
             
         }
         else //两个不同东西
         {
-            UpdateBagList(twoSlots[0].itemDetails.itemID, twoSlots[0].itemAmount, endIndex);
+            int endSlotItemID = twoSlots[1].itemDetails.itemID; //暂存id
+            int endSlotAmount = twoSlots[1].itemAmount;
+
+
+            UpdateBagList(twoSlots[0].itemDetails.itemID, twoSlots[0].itemAmount, endIndex); //更新放下时的数据
+            ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount); //更新放下时ui
+            
+            switch (twoSlots[0].slotType) //判断原来的类型
+            {
+                 case SlotType.ToolBarSlot: 
+                     InventoryMgr.Instance.UpdateListInfo(InventoryContainerType.Bag, endSlotItemID, endSlotAmount,
+                         startIndex);
+                     EventMgr.Instance.EventTrigger("ToolBarUIUpdate", new[] {startIndex, endSlotItemID, endSlotAmount});
+                     EventMgr.Instance.EventTrigger("BagUIUpdate", new[] {startIndex, endSlotItemID, endSlotAmount});
+                     break;
+                // case SlotType.BagSlot:不需要，因为是同一个数据结构（也不可能同时开启）
+                //     break;
+                case SlotType.BoxSlot:
+                    InventoryMgr.Instance.UpdateListInfo(InventoryContainerType.Box, endSlotItemID, endSlotAmount,
+                        startIndex);
+                    //调用对应面板里的事件（还没写）
+                    break;
+                case SlotType.ShopSlot:
+                    InventoryMgr.Instance.UpdateListInfo(InventoryContainerType.Shop, endSlotItemID, endSlotAmount,
+                        startIndex);
+                    //调用对应面板里的事件（还没写）
+                    break;
+            }
         }
-        ToolBarSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, twoSlots[0].itemAmount); //更新ui
+
+        
     }
 
     /// <summary>

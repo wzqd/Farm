@@ -66,6 +66,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
     }
 
     /// <summary>
+    /// 清空格子数量
+    /// </summary>
+    public void EmptySlotQuantity()
+    {
+        itemAmount = 0; //清空数量
+    }
+    
+    /// <summary>
     /// 格子被点击时
     /// </summary>
     /// <param name="eventData"></param>
@@ -104,6 +112,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
     /// <exception cref="NotImplementedException"></exception>
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (itemAmount == 0) return; //如果拖拽的是空格子，返回
         switch (slotType) //开始拖拽和点击一样都要触发高亮
         {
             case SlotType.ToolBarSlot:
@@ -126,8 +135,6 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
             case SlotType.ShopSlot:
                 break;
         }
-        
-        if (itemAmount == 0) return; //如果拖拽的是空格子，返回
         EventMgr.Instance.EventTrigger("SlotBeginDrag",this);
     }
 
@@ -142,9 +149,17 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
         EventMgr.Instance.EventTrigger("SlotEndDrag"); //隐藏图片
 
         GameObject endSlotObj = eventData.pointerCurrentRaycast.gameObject; //得到结束拖拽时的物体
-        if (endSlotObj is null) return;
+        if (endSlotObj is null) //如果没落在格子上，重新显示
+        {
+            UpdateSlot(itemDetails, itemAmount);
+            return;
+        }
         Slot endSlot = endSlotObj.GetComponent<Slot>(); //得到结束拖拽时slot脚本
-        if (endSlot is null) return;
+        if (endSlot is null)
+        {
+            UpdateSlot(itemDetails, itemAmount);
+            return;
+        }
         
         switch (endSlot.slotType) //结束拖拽和点击一样都要触发高亮
         {

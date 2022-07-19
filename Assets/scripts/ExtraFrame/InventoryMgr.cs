@@ -101,6 +101,10 @@ public class InventoryMgr : Singleton<InventoryMgr>
         return 0;
     }
     
+    /// <summary>
+    /// 更新指定UI上所有格子
+    /// </summary>
+    /// <param name="slotType"></param>
     private void UpdateUIByInventoryInfo(SlotType slotType)
     {
         switch (slotType)
