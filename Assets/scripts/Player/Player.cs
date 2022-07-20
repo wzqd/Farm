@@ -8,7 +8,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("组件")]
-    private FSM playerFsm;
+    [SerializeField] private FSM playerFsm;
     private Rigidbody2D rb;
         
     [Header("移动参数")]
@@ -17,12 +17,18 @@ public class Player : MonoBehaviour
     [SerializeField] private float verticalDirection;
     private Vector2 moveVector;
 
+    [Header("动画参数")] 
+    private Animator[] animators;
+
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        playerFsm = gameObject.AddComponent<FSM>();
-        playerFsm.CurrentStateType = E_States.Default;
+        rb = GetComponent<Rigidbody2D>(); //得刚体
+        animators = GetComponentsInChildren<Animator>();
+        playerFsm = gameObject.AddComponent<FSM>(); //加状态机
+        
+        
+        playerFsm.CurrentStateType = E_States.Player_Idle;
         
         InputMgr.Instance.SwitchAllButtons(true);
         EventMgr.Instance.AddEventListener<KeyCode>("KeyIsPressed", keyPressed);
@@ -34,6 +40,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         EventMgr.Instance.AddEventListener("PlayerMove", Move);
+        EventMgr.Instance.AddEventListener("PlayerIdle", Idle);
 
     }
 
@@ -47,8 +54,13 @@ public class Player : MonoBehaviour
             horizontalDirection *= 0.7f; //2* 0.7^2 = 1
             verticalDirection *= 0.7f;
         }
+        
         moveVector = new Vector2(horizontalDirection, verticalDirection);
 
+        if (moveVector == Vector2.zero) //检测站定状态
+        {
+            playerFsm.ChangeState(E_States.Player_Idle);
+        }
     }
     
     
@@ -74,7 +86,22 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        rb.MovePosition(rb.position + moveVector * (moveSpeed * Time.deltaTime));
+        rb.MovePosition(rb.position + moveVector * (moveSpeed * Time.deltaTime)); //移动
+        foreach(Animator anim in animators)
+        {
+            anim.SetFloat("InputX", horizontalDirection);
+            anim.SetFloat("InputY", verticalDirection); //设置blender参数
+            
+            anim.Play("Move");
+        }
+    }
+
+    private void Idle()
+    {
+        foreach(Animator anim in animators)
+        {
+            anim.Play("Idle");
+        }
     }
     
     

@@ -6,6 +6,7 @@ public enum E_States
     Default = 0,
     
     //player
+    Player_Idle,
     Player_Move,
 }
 

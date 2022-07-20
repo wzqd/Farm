@@ -8,5 +8,11 @@ public class Player_Move : BaseState
     {
         EventMgr.Instance.EventTrigger("PlayerMove");
     }
+}public class Player_Idle : BaseState
+{
+    public override void Act()
+    {
+        EventMgr.Instance.EventTrigger("PlayerIdle");
+    }
 }
 
