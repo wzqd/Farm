@@ -108,6 +108,7 @@ public class PlayerBag : BasePanel
             currentSelectedSlot.isSelected = true;
             currentSelectedSlot.slotHighlight.gameObject.SetActive(true); //选中新的格子
         }
+        
     }
 
     /// <summary>
@@ -139,7 +140,7 @@ public class PlayerBag : BasePanel
             //更新自己列表数据
             UpdateBagList (startSlotItemID, startSlotAmount + endSlotAmount, endIndex);
             BagSlots[endIndex].UpdateSlot(twoSlots[0].itemDetails, startSlotAmount + endSlotAmount); //更新自己ui
-            if (endIndex < Settings.toolBarCapacity)
+            if (endIndex < Settings.toolBarCapacity) //更新工具栏ui
             {
                  EventMgr.Instance.EventTrigger("ToolBarUIUpdate", new[] {endIndex, startSlotItemID, startSlotAmount}); //更新工具栏ui
             }
@@ -150,7 +151,16 @@ public class PlayerBag : BasePanel
             twoSlots[0].EmptySlotQuantity();//清空原先格子数量
             if (startIndex < Settings.toolBarCapacity)
             {
-                EventMgr.Instance.EventTrigger("ToolBarUIUpdateQuantityEmpty", startIndex); //清空背包中物品栏数量（UI不同步）
+                EventMgr.Instance.EventTrigger("ToolBarUIUpdateQuantityEmpty", startIndex); //清空物品栏原先格子数量
+                if (endIndex >= Settings.toolBarCapacity) //如果结束时落在背包里（从物品栏进背包）
+                {
+                    EventMgr.Instance.EventTrigger("CleanSlotHighlight", startIndex); //清除起始物品栏格子高亮
+                }
+            }
+
+            if (startIndex >= Settings.toolBarCapacity && endIndex < Settings.toolBarCapacity )//如果结束时落在物品栏里（从背包进物品栏）
+            {
+                EventMgr.Instance.EventTrigger("CleanCurrentSlotHighlight"); //清除现有物品栏中的高亮
             }
         }
         else //两个不同东西

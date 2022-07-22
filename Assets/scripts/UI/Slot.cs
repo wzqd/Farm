@@ -79,13 +79,20 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (itemAmount == 0) return; //如果拖拽的是空格子，返回
         switch (slotType)
         {
             case SlotType.ToolBarSlot:
                 EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮选中事件
+                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
                 break;
             case SlotType.BagSlot:
-                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
+                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮选中事件
+                if (slotIndex < Settings.toolBarCapacity)
+                {
+                    EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮选中事件
+                }
+                
                 break;
             case SlotType.BoxSlot:
                 break;
@@ -117,6 +124,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
         {
             case SlotType.ToolBarSlot:
                 EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮选中事件
+                EventMgr.Instance.EventTrigger("BagSlotHighlight", slotIndex); //触发背包高亮选中事件
                 
                 EventMgr.Instance.EventTrigger("ToolBarSlotBeginDrag",this);//触发开始拖拽至工具栏事件
                 EventMgr.Instance.EventTrigger("BagSlotBeginDrag",this);//同时更新背包工具栏
@@ -127,6 +135,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
                 EventMgr.Instance.EventTrigger("BagSlotBeginDrag",this);//触发开始拖拽至背包事件
                 if (slotIndex < Settings.toolBarCapacity)//如果拖拽背包工具栏部分
                 {
+                    EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", slotIndex); //触发工具栏高亮选中事件
                     EventMgr.Instance.EventTrigger("ToolBarSlotBeginDrag",this);//同时更新背包
                 }
                 break;
@@ -148,34 +157,63 @@ public class Slot : MonoBehaviour, IPointerClickHandler,IDragHandler,IBeginDragH
         if (itemAmount == 0) return; //如果最初拖拽的是空格子，返回
         EventMgr.Instance.EventTrigger("SlotEndDrag"); //隐藏图片
 
+        
+        
         GameObject endSlotObj = eventData.pointerCurrentRaycast.gameObject; //得到结束拖拽时的物体
         if (endSlotObj is null) //如果没落在格子上，重新显示
         {
-            UpdateSlot(itemDetails, itemAmount);
+            UpdateSlot(itemDetails, itemAmount); //重新显示自己
+            switch (slotType) //如果自己是物品栏或背包，再重新显示对方
+            {
+                case SlotType.ToolBarSlot:
+                    EventMgr.Instance.EventTrigger("BagUIUpdate", new[] {slotIndex,itemDetails.itemID,itemAmount}); //更新背包第i位的ui
+                    break;
+                case SlotType.BagSlot:
+                    if (slotIndex < Settings.toolBarCapacity)
+                    {
+                        EventMgr.Instance.EventTrigger("ToolBarUIUpdate",new[] {slotIndex,itemDetails.itemID,itemAmount}); //更新物品栏第i位的ui
+                    }
+                    break;
+            }
             return;
         }
         Slot endSlot = endSlotObj.GetComponent<Slot>(); //得到结束拖拽时slot脚本
-        if (endSlot is null)
+        if (endSlot is null || endSlot == this) //空的或者是自己
         {
             UpdateSlot(itemDetails, itemAmount);
+            switch (slotType) //如果自己是物品栏或背包，再重新显示对方
+            {
+                case SlotType.ToolBarSlot:
+                    EventMgr.Instance.EventTrigger("BagUIUpdate", new[] {slotIndex,itemDetails.itemID,itemAmount}); //更新背包第i位的ui
+                    break;
+                case SlotType.BagSlot:
+                    if (slotIndex < Settings.toolBarCapacity)
+                    {
+                        EventMgr.Instance.EventTrigger("ToolBarUIUpdate",new[] {slotIndex,itemDetails.itemID,itemAmount}); //更新物品栏第i位的ui
+                    }
+                    break;
+            }
             return;
         }
+        
+        
         
         switch (endSlot.slotType) //结束拖拽和点击一样都要触发高亮
         {
             case SlotType.ToolBarSlot:
-                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", endSlot.slotIndex); //触发工具栏高亮选中事件
-                
+
                 //触发结束拖拽至工具栏事件，传过去结束时碰到的UI脚本
                 EventMgr.Instance.EventTrigger("ToolBarSlotEndDrag",new[] {this,endSlot});
+                
+                EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", endSlot.slotIndex); //触发工具栏高亮选中事件（高亮在数据更新之后）
                 EventMgr.Instance.EventTrigger("BagSlotHighlight", endSlot.slotIndex); //同时高亮背包中部分
                 break;
             
             case SlotType.BagSlot:
-                EventMgr.Instance.EventTrigger("BagSlotHighlight",endSlot. slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
-                
                 //触发结束拖拽至背包事件
                 EventMgr.Instance.EventTrigger("BagSlotEndDrag",new[] {this,endSlot});
+                
+                EventMgr.Instance.EventTrigger("BagSlotHighlight",endSlot. slotIndex); //触发背包高亮选中事件（要保证格子已经分配了下标）
                 if (endSlot.slotIndex < Settings.toolBarCapacity) //如果落在背包工具栏部分
                 {
                     EventMgr.Instance.EventTrigger("ToolBarSlotHighlight", endSlot.slotIndex); //同时高亮物品栏

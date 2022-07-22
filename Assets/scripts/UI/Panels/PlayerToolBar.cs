@@ -36,7 +36,10 @@ public class PlayerToolBar : BasePanel
         EventMgr.Instance.AddEventListener<int[]>("ToolBarUIUpdate", ToolBarUIUpdate); //更新第i位的ui
         EventMgr.Instance.AddEventListener<int>("ToolBarUIUpdateEmpty", ToolBarUIUpdateEmpty); //更新第i位的ui
         EventMgr.Instance.AddEventListener<int>("ToolBarUIUpdateQuantityEmpty", ToolBarUIUpdateQuantityEmpty); //更新第i位的ui
-        
+
+
+        EventMgr.Instance.AddEventListener<int>("CleanSlotHighlight", CleanSlotHighlight);
+        EventMgr.Instance.AddEventListener("CleanCurrentSlotHighlight", CleanCurrentSlotHighlight);
     }
 
     public override void Show()
@@ -101,10 +104,23 @@ public class PlayerToolBar : BasePanel
         {
             currentSelectedSlot.isSelected = false;
             currentSelectedSlot.slotHighlight.gameObject.SetActive(false); //取消之前的选中
+            
             currentSelectedSlot = ToolBarSlots[index]; //赋值为新的格子
             currentSelectedSlot.isSelected = true;
             currentSelectedSlot.slotHighlight.gameObject.SetActive(true); //选中新的格子
         }
+
+        if (ToolBarSlots[index].itemAmount> 0 && ToolBarSlots[index].itemDetails.canBeLifted) //如果高亮的是可以被举起的物品 
+        { //（并且数量大于0，因为itemDetails只有覆盖是才会更新）
+            
+            EventMgr.Instance.EventTrigger("PlayerLiftItem", ToolBarSlots[index].itemDetails); //触发事件让玩家举起
+        }
+        else
+        {
+            EventMgr.Instance.EventTrigger("PlayerCancelLiftItem"); //触发事件取消举起
+        }
+        
+        
     }
     
     /// <summary>
@@ -177,10 +193,39 @@ public class PlayerToolBar : BasePanel
                     break;
             }
         }
-
-        
     }
 
+    /// <summary>
+    /// 清除对应格子的高亮
+    /// </summary>
+    private void CleanSlotHighlight(int index)
+    {
+        ToolBarSlots[index].isSelected = false;
+        ToolBarSlots[index].slotHighlight.gameObject.SetActive(false); //取消选中，清除高亮图片
+        currentSelectedSlot = null;
+        
+        EventMgr.Instance.EventTrigger("PlayerCancelLiftItem"); //触发事件取消举起
+    }    
+    
+    /// <summary>
+    /// 清除现有格子的高亮
+    /// </summary>
+    private void CleanCurrentSlotHighlight()
+    {
+        print(currentSelectedSlot);
+        if (currentSelectedSlot is not null)
+        {
+            currentSelectedSlot.isSelected = false;
+            currentSelectedSlot.slotHighlight.gameObject.SetActive(false); //取消选中，清除高亮图片
+            currentSelectedSlot = null;
+        }
+        
+        print(currentSelectedSlot);
+        EventMgr.Instance.EventTrigger("PlayerCancelLiftItem"); //触发事件取消举起
+    }
+    
+    
+    
     /// <summary>
     /// 更新背包数据
     /// 封装了一遍inventoryMgr中的方法

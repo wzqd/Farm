@@ -17,31 +17,44 @@ public class Player : MonoBehaviour
     [SerializeField] private float verticalDirection;
     private Vector2 moveVector;
 
-    [Header("动画参数")] 
-    private Animator[] animators;
-
-
+    [Header("动画参数")]
+    [SerializeField] private SpriteRenderer holdItemSpriteRenderer;
+    private Animator[] animators; //0身体 1头发 2手臂
+    //身体部位特殊动画
+    [SerializeField]private AnimatorOverrideController Arm;
+    [SerializeField]private AnimatorOverrideController Arm_Hold;
+    
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>(); //得刚体
         animators = GetComponentsInChildren<Animator>();
         playerFsm = gameObject.AddComponent<FSM>(); //加状态机
-        
+
+        holdItemSpriteRenderer.enabled = false; //关闭举起的图片
         
         playerFsm.CurrentStateType = E_States.Player_Idle;
         
         InputMgr.Instance.SwitchAllButtons(true);
+        
+        //按键触发事件监听
         EventMgr.Instance.AddEventListener<KeyCode>("KeyIsPressed", keyPressed);
         EventMgr.Instance.AddEventListener<KeyCode>("KeyIsHeld", keyHeld);
         EventMgr.Instance.AddEventListener<KeyCode>("KeyIsReleased", keyReleased);
+
+        //其他事件监听
+        EventMgr.Instance.AddEventListener<ItemDetails>("PlayerLiftItem", Lift);
+        EventMgr.Instance.AddEventListener("PlayerCancelLiftItem", CancelLift);
     }
     
 
     void Start()
     {
+        //状态事件监听
         EventMgr.Instance.AddEventListener("PlayerMove", Move);
         EventMgr.Instance.AddEventListener("PlayerIdle", Idle);
 
+        
     }
 
 
@@ -62,8 +75,9 @@ public class Player : MonoBehaviour
             playerFsm.ChangeState(E_States.Player_Idle);
         }
     }
-    
-    
+
+    #region 所有按键触发事件
+    #endregion
     
     private void keyPressed(KeyCode key)
     {
@@ -82,8 +96,9 @@ public class Player : MonoBehaviour
     }
 
 
+    #region 所有状态
 
-
+    #endregion
     private void Move()
     {
         rb.MovePosition(rb.position + moveVector * (moveSpeed * Time.deltaTime)); //移动
@@ -103,10 +118,30 @@ public class Player : MonoBehaviour
             anim.Play("Idle");
         }
     }
+
+
+
+    #region 其他事件
+    #endregion
     
-    
-    
-    
+    private void Lift(ItemDetails itemDetails)
+    {
+        holdItemSpriteRenderer.sprite = itemDetails.itemSpriteInWorld;
+        holdItemSpriteRenderer.enabled = true;
+
+        animators[2].runtimeAnimatorController = Arm_Hold;
+    }
+
+    private void CancelLift()
+    {
+        holdItemSpriteRenderer.enabled = false;
+        animators[2].runtimeAnimatorController = Arm;
+    }
+
+
+
+    #region 所有碰撞触发
+    #endregion
     private void OnTriggerEnter2D(Collider2D other)
     {
         EventMgr.Instance.EventTrigger("TriggerFadeIn",other.gameObject.name); //触发事件，让遮住的物体变淡

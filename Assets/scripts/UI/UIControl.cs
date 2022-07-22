@@ -62,6 +62,8 @@ public class UIControl : MonoBehaviour
     /// </summary>
     private void OpenClosePlayerBag()
     {
+        if (playerBagCanvasGroup is null || playerToolBarCanvasGroup is null) return;
+        
         if (Input.GetKeyDown(KeyCode.E)) //之后可以设置键位
         {
             if (bagIsOpened) //如果正打开，关闭
