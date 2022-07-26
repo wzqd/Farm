@@ -9,8 +9,8 @@ using UnityEngine;
 /// </summary>
 public interface IFader
 {
-    public void FadeIn(string objectName);  //淡入
-    public void FadeOut(string objectName); //淡出
+    public void FadeIn();  //淡入
+    public void FadeOut(); //淡出
     
 }
 
@@ -28,7 +28,7 @@ public class FaderMgr : Singleton<FaderMgr>
     /// </summary>
     private Dictionary<string, IFader> faderDict = new Dictionary<string, IFader>();
 
-    public  FaderMgr()
+    public FaderMgr()
     {
         //添加对于物体淡化的监听
         EventMgr.Instance.AddEventListener<string>("TriggerFadeIn", TriggerFadeIn); 
@@ -43,6 +43,15 @@ public class FaderMgr : Singleton<FaderMgr>
     public void AddFaderRegistry(string objectName, IFader obj)
     {
         faderDict.Add(objectName,obj);
+    }    
+    
+    /// <summary>
+    /// 取消登记可淡化物体
+    /// </summary>
+    /// <param name="objectName">物体名</param>
+    public void RemoveFaderRegistry(string objectName)
+    {
+        faderDict.Remove(objectName);
     }
     
     /// <summary>
@@ -53,7 +62,7 @@ public class FaderMgr : Singleton<FaderMgr>
     {
         if (faderDict.ContainsKey(objectName))
         {
-            faderDict[objectName].FadeIn(objectName);
+            faderDict[objectName].FadeIn();
         }
     }
     /// <summary>
@@ -64,7 +73,7 @@ public class FaderMgr : Singleton<FaderMgr>
     {
         if (faderDict.ContainsKey(objectName))
         {
-            faderDict[objectName].FadeOut(objectName);
+            faderDict[objectName].FadeOut();
         }
     }
     

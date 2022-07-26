@@ -45,6 +45,8 @@ public class Player : MonoBehaviour
         //其他事件监听
         EventMgr.Instance.AddEventListener<ItemDetails>("PlayerLiftItem", Lift);
         EventMgr.Instance.AddEventListener("PlayerCancelLiftItem", CancelLift);
+        
+        EventMgr.Instance.AddEventListener<Vector3>("Teleport", Teleport);
     }
     
 
@@ -138,7 +140,10 @@ public class Player : MonoBehaviour
         animators[2].runtimeAnimatorController = Arm;
     }
 
-
+    private void Teleport(Vector3 destination)
+    {
+        this.transform.position = destination;
+    }
 
     #region 所有碰撞触发
     #endregion
@@ -146,6 +151,8 @@ public class Player : MonoBehaviour
     {
         EventMgr.Instance.EventTrigger("TriggerFadeIn",other.gameObject.name); //触发事件，让遮住的物体变淡
         EventMgr.Instance.EventTrigger("PickUpItems",other.gameObject); //触发事件，捡起道具
+        EventMgr.Instance.EventTrigger("TriggerTeleport",other.gameObject.name); //触发事件，传送
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)
