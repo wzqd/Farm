@@ -19,9 +19,10 @@ public class SceneMgr : Singleton<SceneMgr>
     /// </summary>
     /// <param name="sceneName">场景名</param>
     /// <param name="afterLoad">加载后调用的函数</param>
-    public void LoadScene(string sceneName, UnityAction afterLoad)
+    /// <param name="loadSceneMode">加载模式</param>
+    public void LoadScene(string sceneName, UnityAction afterLoad, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName,loadSceneMode);
         afterLoad();
     }
 
@@ -30,14 +31,15 @@ public class SceneMgr : Singleton<SceneMgr>
     /// </summary>
     /// <param name="sceneName">场景名</param>
     /// <param name="afterLoad">加载后调用的函数</param>
-    public void LoadSceneAsync(string sceneName, UnityAction afterLoad)
+    /// <param name="loadSceneMode">加载模式</param>
+    public void LoadSceneAsync(string sceneName, UnityAction afterLoad, LoadSceneMode loadSceneMode)
     {
-        MonoMgr.Instance.StartCoroutine(LoadSceneAsyncCoroutine(sceneName, afterLoad));
+        MonoMgr.Instance.StartCoroutine(LoadSceneAsyncCoroutine(sceneName, afterLoad, loadSceneMode));
     }
 
-    private IEnumerator LoadSceneAsyncCoroutine(string sceneName, UnityAction afterLoad) //协程函数
+    private IEnumerator LoadSceneAsyncCoroutine(string sceneName, UnityAction afterLoad,LoadSceneMode loadSceneMode = LoadSceneMode.Single) //协程函数
     {
-        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName, loadSceneMode);
 
         while (!ao.isDone)
         {

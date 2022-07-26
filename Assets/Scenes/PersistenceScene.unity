@@ -191,6 +191,8 @@ MonoBehaviour:
   horizontalDirection: 0
   verticalDirection: 0
   holdItemSpriteRenderer: {fileID: 792071182}
+  Arm: {fileID: 22100000, guid: b654d2b83de69284387b4462af9f5681, type: 2}
+  Arm_Hold: {fileID: 22100000, guid: 6b8529032f14a244080df5b46ad40e9f, type: 2}
 --- !u!50 &449986849
 Rigidbody2D:
   serializedVersion: 4

@@ -11,7 +11,7 @@ public class SwitchBounds : MonoBehaviour
 {
     private void Start()
     {
-        SwitchConfineShape();
+        EventMgr.Instance.AddEventListener("SwitchCameraBounds", SwitchConfineShape);
     }
 
     /// <summary>
