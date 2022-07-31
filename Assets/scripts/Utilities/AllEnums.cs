@@ -9,3 +9,8 @@ public enum SlotType
 {
     ToolBarSlot,BagSlot, BoxSlot, ShopSlot
 }
+public enum Season
+{
+    Spring, Summer, Fall, Winter
+}
+
